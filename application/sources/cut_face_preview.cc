@@ -1,4 +1,5 @@
 #include <QPainter>
+#include <QPainterPath>
 #include "cut_face_preview.h"
 #include "theme.h"
 
@@ -8,7 +9,7 @@ QImage *buildCutFaceTemplatePreviewImage(const std::vector<dust3d::Vector2> &cut
 {
     QImage *image = new QImage(Theme::partPreviewImageSize, Theme::partPreviewImageSize, QImage::Format_ARGB32);
     image->fill(Qt::transparent);
-    
+
     if (cutTemplate.empty())
         return image;
 
@@ -16,29 +17,29 @@ QImage *buildCutFaceTemplatePreviewImage(const std::vector<dust3d::Vector2> &cut
     painter.begin(image);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setRenderHint(QPainter::HighQualityAntialiasing);
-    
+
     QPen pen(Theme::red, 2);
     painter.setPen(pen);
-    
+
     QBrush brush;
     brush.setColor(Theme::white);
     brush.setStyle(Qt::SolidPattern);
-    
+
     painter.setBrush(brush);
-    
+
     const float scale = 0.7f;
     QPolygon polygon;
     for (int i = 0; i <= cutTemplate.size(); ++i) {
         const auto &it = cutTemplate[i % cutTemplate.size()];
-        polygon.append(QPoint((it.x() * scale + 1.0) * 0.5 * Theme::partPreviewImageSize, 
+        polygon.append(QPoint((it.x() * scale + 1.0) * 0.5 * Theme::partPreviewImageSize,
             (it.y() * scale + 1.0) * 0.5 * Theme::partPreviewImageSize));
     }
-    
+
     QPainterPath path;
     path.addPolygon(polygon);
     painter.fillPath(path, brush);
     painter.drawPath(path);
-    
+
     painter.end();
 
     return image;

@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2016-2021 Jeremy HU <jeremy-at-dust3d dot org>. All rights reserved. 
+ *  Copyright (c) 2016-2021 Jeremy HU <jeremy-at-dust3d dot org>. All rights reserved.
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
  */
- 
+
 #ifndef DUST3D_BASE_VECTOR2_H_
 #define DUST3D_BASE_VECTOR2_H_
 
@@ -57,17 +57,17 @@ public:
         m_data {0.0, 0.0}
     {
     }
-    
+
     inline Vector2(double x, double y) :
         m_data {x, y}
     {
     }
-    
+
     inline double &operator[](size_t index)
     {
         return m_data[index];
     }
-    
+
     inline const double &operator[](size_t index) const
     {
         return m_data[index];
@@ -77,77 +77,77 @@ public:
     {
         return m_data[0];
     }
-    
+
     inline const double &y() const
     {
         return m_data[1];
     }
-    
+
     inline void setX(double x)
     {
         m_data[0] = x;
     }
-    
+
     inline void setY(double y)
     {
         m_data[1] = y;
     }
-    
+
     inline const double *data() const
     {
         return &m_data[0];
     }
-    
+
     inline void setData(double x, double y)
     {
         m_data[0] = x;
         m_data[1] = y;
     }
-    
+
     inline double lengthSquared() const
     {
         return x() * x() + y() * y();
     }
-    
+
     inline double length() const
     {
         double length2 = x() * x() + y() * y();
         return std::sqrt(length2);
     }
-    
+
     inline Vector2 normalized() const
     {
         double length2 = x() * x() + y() * y();
-    
+
         double length = std::sqrt(length2);
         if (Math::isZero(length))
             return Vector2();
-        
+
         return Vector2(x() / length, y() / length);
     }
-    
+
     inline void normalize()
     {
         double length2 = x() * x() + y() * y();
-    
+
         double length = std::sqrt(length2);
         if (Math::isZero(length))
             return;
-        
+
         m_data[0] = x() / length;
         m_data[1] = y() / length;
     }
-    
+
     inline bool isOnLeft(const Vector2 &a, const Vector2 &b) const
     {
         return ((b.x() - a.x()) * (y() - a.y()) - (b.y() - a.y()) * (x() - a.x())) > 0;
     }
-    
+
     inline static double dotProduct(const Vector2 &a, const Vector2 &b)
     {
         return a.x() * b.x() + a.y() * b.y();
     }
-    
+
     inline static Vector2 barycentricCoordinates(const Vector2 &a, const Vector2 &b, const Vector2 &c, const Vector2 &point)
     {
         auto v0 = c - a;
@@ -163,10 +163,10 @@ public:
         auto invDenom = 1.0 / (dot00 * dot11 - dot01 * dot01);
         auto alpha = (dot11 * dot02 - dot01 * dot12) * invDenom;
         auto beta = (dot00 * dot12 - dot01 * dot02) * invDenom;
-        
+
         return Vector2(alpha, beta);
     }
-    
+
     inline static bool isInTriangle(const Vector2 &a, const Vector2 &b, const Vector2 &c, const Vector2 &point)
     {
         auto alphaAndBeta = barycentricCoordinates(a, b, c, point);
@@ -178,7 +178,7 @@ public:
             return false;
         return true;
     }
-    
+
     inline bool isInPolygon(const std::vector<Vector2> &polygon) const
     {
         bool inside = false;
@@ -191,7 +191,7 @@ public:
         }
         return inside;
     }
-    
+
     inline bool isInPolygon(const std::vector<Vector2> &polygonVertices, const std::vector<size_t> &polygonIndices) const
     {
         bool inside = false;
@@ -204,14 +204,14 @@ public:
         }
         return inside;
     }
-    
+
     inline Vector2 &operator+=(const Vector2 &other)
     {
         m_data[0] += other.x();
         m_data[1] += other.y();
         return *this;
     }
-    
+
     inline bool isZero() const
     {
         return Math::isZero(m_data[0]) &&
@@ -250,12 +250,6 @@ inline Vector2 operator/(const Vector2 &v, double number)
 inline std::string to_string(const Vector2 &v)
 {
     return std::to_string(v.x()) + "," + std::to_string(v.y());
-}
-
-inline std::ostream &operator<<(std::ostream &os, const Vector2 &v)
-{
-    os << v.x() << ',' << v.y();
-    return os;
 }
 
 inline bool operator==(const Vector2 &a, const Vector2 &b)
