@@ -37,7 +37,7 @@ public:
     void updateAppearance()
     {
         QColor color = Theme::white;
-        
+
         switch (m_profile)
         {
         case SkeletonProfile::Unknown:
@@ -49,13 +49,13 @@ public:
             color = Theme::green;
             break;
         }
-        
+
         QColor penColor = color;
         penColor.setAlphaF(m_checked ? Theme::checkedAlpha : Theme::normalAlpha);
         QPen pen(penColor);
         pen.setWidth(0);
         setPen(pen);
-        
+
         QColor brushColor = color;
         brushColor.setAlphaF((m_checked || m_hovered) ? Theme::checkedAlpha : Theme::normalAlpha);
         QBrush brush(brushColor);
@@ -145,7 +145,7 @@ public:
     void updateAppearance()
     {
         QColor color = Qt::gray;
-        
+
         if (!m_deactivated) {
             switch (m_profile)
             {
@@ -159,13 +159,13 @@ public:
                 break;
             }
         }
-        
+
         QColor penColor = color;
         penColor.setAlphaF((m_checked || m_hovered) ? Theme::checkedAlpha : Theme::normalAlpha);
         QPen pen(penColor);
-        pen.setWidth(0);
+        pen.setWidth(2);
         setPen(pen);
-        
+
         QColor brushColor;
         Qt::BrushStyle style;
         if (m_markColor == Qt::transparent) {
@@ -299,11 +299,11 @@ public:
     {
         if (nullptr == m_firstItem || nullptr == m_secondItem)
             return;
-        
+
         m_profile = m_firstItem->profile();
-        
+
         QLineF line(m_firstItem->origin(), m_secondItem->origin());
-        
+
         QPolygonF polygon;
         float radAngle = line.angle() * M_PI / 180;
         float dx = 2 * sin(radAngle);
@@ -313,9 +313,9 @@ public:
         //polygon << line.p1() + offset1 << line.p1() + offset2 << line.p2() + offset2 << line.p2() + offset1;
         polygon << line.p1() + offset1 << line.p1() + offset2 << line.p2();
         setPolygon(polygon);
-        
+
         QColor color = Qt::gray;
-        
+
         if (!m_deactivated) {
             switch (m_firstItem->profile())
             {
@@ -329,7 +329,7 @@ public:
                 break;
             }
         }
-        
+
         QColor penColor = color;
         penColor.setAlphaF((m_checked || m_hovered) ? Theme::checkedAlpha : Theme::normalAlpha);
         QPen pen(penColor);
