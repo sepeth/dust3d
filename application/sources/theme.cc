@@ -26,7 +26,7 @@ void Theme::initialize()
     QApplication::setStyle(QStyleFactory::create("Fusion"));
 
     QPalette darkPalette;
-    darkPalette.setColor(QPalette::Window, QColor(0x25, 0x25, 0x25));
+    darkPalette.setColor(QPalette::Window, QColor(0x45, 0x45, 0x45));
     darkPalette.setColor(QPalette::WindowText, QColor(0xf7, 0xd9, 0xc8));
     darkPalette.setColor(QPalette::Base, QColor(25, 25, 25));
     darkPalette.setColor(QPalette::AlternateBase, QColor(53, 53, 53));
@@ -106,13 +106,13 @@ void Theme::updateAwesomeMiniButton(QPushButton *button, QChar icon, bool highli
     } else {
         color = QColor("#525252");
     }
-    
+
     if (needDesaturation) {
         color = color.toHsv();
         color.setHsv(color.hue(), color.saturation() / 5, color.value() * 2 / 3);
         color = color.toRgb();
     }
-    
+
     if (!enabled) {
         color = QColor(42, 42, 42);
     }
